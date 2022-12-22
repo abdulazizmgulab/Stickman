@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stickman Story</title>
+</head>
+
+<body onload='start()'>
+    <style>
+        *{
+padding: 0;
+margin: 0; 
+box-sizing: border-box;
+}
+
+body {
+overflow: hidden;
+}
+
+#primary-container{
+width: 1000%;
+height: 100vh;
+background-color: black;
+}
+
+/* STICKMAN */
+
+#stickman-container {
+width: 150px;
+height: 280px; 
+position: absolute;
+left: 50px;
+bottom: 70px;
+}
+
+#stickman-container .head {
+width: 80px;
+height: 80px; 
+left: 35px;
+top: 20px;
+border-radius: 50%;
+background-color: transparent;
+border: 3px solid yellow;
+}
+
+#stickman-container div {
+position: absolute;
+border-radius: 50%;
+/* background-color: yellow; */
+}
+
+#stickman-container .body {
+left: 73px;
+top: 100px;
+height: 70px;
+width: 3px;
+background-color: yellow;
+}
+
+#stickman-container .left-hand {
+transform-origin: top;
+transform: rotateZ(30deg);
+top: 100px;
+left: 73px;
+width: 3px;
+height: 80px;
+background-color: yellow;
+}
+
+#stickman-container .right-hand {
+transform-origin: top;
+transform: rotateZ(-30deg);
+top: 100px;
+left: 73px;
+width: 3px;
+height: 80px; 
+background-color:yellow;
+}
+
+#stickman-container .left-leg {
+top: 170px;
+left: 73px; 
+transform: rotateZ(25deg);
+transform-origin: top;
+width: 3px;
+height: 80px;
+background-color: yellow;
+}
+
+#stickman-container .right-leg {
+top: 170px;
+left: 73px;
+transform:rotateZ(-25deg);
+transform-origin: top;
+width: 3px;
+height: 80px;
+background-color: yellow;
+}
+
+/* STICKWOMAN */
+
+#stickwoman-container {
+width: 150px;
+height: 280px;
+position: absolute;
+right: -550px; 
+bottom: 70px;
+}
+
+#stickwoman-container div {
+position: absolute;
+width: 4px; 
+height: 80px;
+border-radius: 50%;
+background-color:white;
+}
+
+#stickwoman-container .head {
+width: 80px;
+height: 80px;
+left: 35px;
+top: 20px;
+border-radius: 50%; 
+background-color: black;
+border: 3px solid rgb(255, 255, 225);
+}
+
+#stickwoman-container .body {
+position: relative;
+height: 70px;
+width: 50px;
+background-color: transparent;
+}
+
+#stickwoman-container .body div {
+position: absolute;
+width: 3px;
+height: 75px;
+border-radius: 50%;
+background-color: white;
+}
+
+#stickwoman-container .body #first{
+left: 73px;
+top: 101px;
+transform: rotateZ(16deg);
+transform-origin: top;
+}
+
+#stickwoman-container .body #second {
+left: 73px; 
+top: 101px;
+transform: rotateZ(-19deg);   
+transform-origin: top;
+}
+
+#stickwoman-container .body #third {
+top: 150px;
+left: 75px;
+height: 45px;
+transform: rotateZ(90deg); 
+}
+
+#stickwoman-container .left-hand{
+transform-origin: top;
+transform: rotateZ(30deg);
+top: 100px;
+left: 73px;
+width: 3px; 
+height: 80px;
+}
+
+#stickwoman-container .right-hand { 
+transform-origin: top;
+transform: rotateZ(-30deg);
+top: 100px;
+left: 73px;
+}
+
+#stickwoman-container .left-leg {
+top: 172px;
+left: 73px; 
+transform: rotateZ(25deg); 
+transform-origin: top;
+width: 3px;
+}
+
+#stickwoman-container .right-leg {
+top: 172px;
+left: 73px;
+transform: rotateZ(-25deg);
+transform-origin: top;
+width: 3px;
+height: 80px;
+}
+
+/* road */
+
+#road {
+position: absolute;
+width: 1000%;
+height: 3px;
+background-color: white;
+bottom: 95px;
+}
+
+/*animations */
+
+.stickman-animation-1 { 
+animation: stickman-animation-1 17s linear 1 forwards;
+}
+
+.stickman-animation-2 {
+animation: stickman-animation-2 12s linear 1 forwards;
+}
+
+.right-leg-animation {
+animation: right-leg-animation 2s linear alternate infinite;
+}
+
+.left-leg-animation {
+animation: left-leg-animation 2s linear alternate infinite;
+}
+
+.stickwoman-move-forward {
+animation: stickwoman-animation-1 14s linear 1 forwards;
+ }
+ 
+.rose-animation {
+animation: rose-animation 2s linear 1 forwards;
+}
+
+.thunder-animation { 
+animation: thunder-animation 1s linear alternate infinite;
+}
+
+/* additional classes */
+
+#right-hand-fold {
+ display: none;
+ } 
+ 
+.right-hand-fold #hand1 { 
+width: 3px;
+height: 56px;
+background-color: yellow;
+top: 101px; 
+transform: rotateZ(-35deg);
+transform-origin: top;
+left: 73px;
+}
+
+.right-hand-fold #hand2 {
+width: 3px; 
+height: 40px;
+top: 116px;
+transform: rotateZ(38deg);
+left: 130px;
+background-color: yellow;
+transform-origin: top;
+}
+
+#rose {
+font-size: 38px;
+position: absolute;
+top: 67px;
+left: 114px;
+display: none;
+}
+
+#msgBox {
+width: 194px;
+text-align: center;
+padding: 10px 12px;
+line-height: 46px;
+border: 1px solid yellow;
+color: yellow;
+font-size: 35px;
+border-radius: 5%;
+border-end-end-radius: 0%;
+position: absolute; 
+left: 380px;
+letter-spacing: 2px;
+word-spacing: 4px;
+top: 220px; 
+display: none;
+}
+        
+        /* leg animations */
+
+@keyframes left-leg-animation {
+   0%{
+       transform: rotateZ(25deg);
+   }
+   100%{
+       transform: rotateZ(-25deg);
+   }
+}
+@keyframes right-leg-animation {
+  0%{
+      transform: rotateZ(-25deg);
+  }
+  100%{
+      transform: rotateZ(25deg);
+  }
+}
+
+/* body animation */
+
+@keyframes stickman-animation-1 {
+   0%{
+       left:50px;
+   }
+   100%{
+       left:600px;
+   }
+}
+
+@keyframes stickman-animation-2 {
+   0%{
+       left:600px; 
+   }
+   100%{
+       left:-150px;
+   }
+}
+
+@keyframes stickwoman-animation-1 {
+   0%{
+       right: -550px; 
+   }
+   100%{
+       right: -1500px;
+   }
+}
+
+@keyframes rose-animation{
+   0%{
+      top: 67px;
+   }
+   100%{
+       top: 270px;
+   }
+}
+
+@keyframes thunder-animation {
+   0%,10%,12%,50%,53%,60%,64%,80%{
+background-image: linear-gradient(rgb(0, 0, 0), black);
+   }
+   11%,52%,61%,63%{
+   background-image: linear-gradient(white, black);
+   }
+}
+</style>
+
+    <div id="primary-container">
+        <!-- stickman container-->
+        <div id="stickman-container" class='character-container'>
+            <div class="head" id="man-head"></div>
+            <div class="body" id="man-body"></div>
+            <div class="left-hand" id="man-left-hand"></div>
+            <div class="right-hand" id="man-right-hand"></div>
+            <div class="left-leg" id="man-left-leg"></div>
+            <div class="right-leg" id="man-right-leg"></div>
+            <div class="right-hand-fold" id='right-hand-fold'>
+                <div id=hand1></div>
+                <div id=hand2></div>
+            </div>
+            <!--rose -->
+            <div id='rose'>🌹</div> 
+        </div>
+        <!--stickwoman container-->
+        <div id="stickwoman-container" class='character-container'>
+            <div class="head woman"></div>
+            <div class="body woman">
+                <div id='first'></div>
+                <div id='second'></div>
+                <div id='third'></div>
+            </div>
+            <div class="left-hand woman"></div>
+            <div class="right-hand woman"></div>
+            <div class="left-leg" id="woman-right-leg"></div>
+            <div class="right-leg" id="woman-left-leg"></div>
+        </div>
+        <!-- message box -->
+        <div id="msgBox"> 
+            <p>I Love You</p>
+        </div>
+        <!-- road -->
+        <div id="road"></div>
+    </div>
+    <script>
+        let stickman = document.getElementById('stickman-container');
+let stickmanRightLeg = document.getElementById('man-right-leg');
+let stickmanLeftLeg = document.getElementById('man-left-leg'); 
+let stickmanRightHand = document.getElementById('man-right-hand');
+let stickwomanRightLeg = document.getElementById('woman-right-leg');
+let stickwomanLeftLeg = document.getElementById('woman-left-leg');
+
+let stickmanRightHandFold = document.getElementById('right-hand-fold');
+let rose = document.getElementById('rose');
+let msgBox = document.getElementById('msgBox');
+
+let stickwoman = document.getElementById('stickwoman-container');
+
+let background = document.getElementById('primary-container');
+alert('press "Ok" to play story ');
+function start() {
+
+    // walking stickman toward stickwoman 28s (total 20s) 
+    setTimeout(() => {
+        stickman.classList.add('stickman-animation-1'); 
+        stickmanRightLeg.classList.add('right-leg-animation'); 
+        stickmanLeftLeg.classList.add('left-leg-animation');
+        setTimeout(() => { 
+            stickmanRightLeg.classList.remove('right-leg-animation'); 
+            stickmanLeftLeg.classList.remove('left-leg-animation');
+        }, 17888);
+    }, 3000);
+
+    // proposing stickman to stickwoman 13s(total 33s);
+    setTimeout(() => {
+        rose.style.display = 'block';
+        stickmanRightHand.style.display = 'none';
+        stickmanRightHandFold.style.display ='block';
+        setTimeout(() => {
+            msgBox.style.display = 'block';
+            setTimeout(() => {
+                msgBox.style.display = 'none';
+            }, 9000);
+        }, 1000);
+    }, 21000);
+
+    //stickwoman rejects 7s(total 40s)
+    setTimeout(() => {
+        stickwoman.classList.add('stickwoman-move-forward');
+        stickwomanLeftLeg.classList.add('left-leg-animation');
+        stickwomanRightLeg.classList.add('right-leg-animation');
+        setTimeout(() => {
+            stickwomanLeftLeg.classList.remove('left-leg-animation'); 
+            stickwomanRightLeg.classList.remove('right-leg-animation');
+        }, 70000);
+    }, 30000);
+
+    //rose fall 7s (total 47s) 
+    setTimeout(() => {
+        stickmanRightHandFold.style.display ='none'; 
+        stickmanRightHand.style.display = 'block';
+        rose.classList.add('rose-animation');
+    }, 41000);
+
+    //thunder & man go 13s (total 47s)
+
+    setTimeout(() => { 
+        setTimeout(() => {   
+            background.classList.add('thunder-animation'); 
+            stickman.classList.add('stickman-animation-2'); 
+            stickmanRightLeg.classList.add('right-leg-animation'); 
+            stickmanLeftLeg.classList.add('left-leg-animation'); 
+            rose.style.display ='none';
+        },6000);
+    }, 48000);
+}
+</script>
+</body>
+</html>
